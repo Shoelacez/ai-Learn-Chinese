@@ -1,0 +1,79 @@
+{% extends 'features/base.html' %}
+{% block title %} Conversation Simulation{% endblock title %}
+{% block content %}
+<div class="container mt-5">
+    <div class="container">
+        <div class="row">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="scenario">Scenario: </label>
+                    <input class="form-control w-50" type="text" name= "scenario" value="i.e Grocery store">
+                    <label for="scenario">Difficulty:</label>
+                    <select class="form-control w-50"  name="difficulty">
+                        <option value="level 01">Level 1</option>
+                        <option value="level 02">Level 2</option>
+                        <option value="level 03">Level 3</option>
+                        <option value="level 04">Level 4</option>
+                        <option value="level 05">Level 5</option>
+                        <option value="level 06">Level 6</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                </div>
+                <button name= "generate_convo" class="btn btn-outline-primary my-2">Generate Conversation</button>
+            </form>
+
+            <div class="card chat-app">               
+                <!-- Try to put a condition that checks if there is a conversation -->
+                {% if conversation %}
+                <div class="chat">
+                    <div class="chat-header clearfix">
+                        <div>
+                            <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
+                            </a>
+                            <div class="chat-about">
+                                <h6 class="m-b-0">{{ scenario }}</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-history">
+                        {% for name, dialogue in conversation %}
+                        {% if name == 'A' %}
+                        <ul class="m-b-0">
+                            <li class="clearfix">
+                                <div class="message other-message float-right">{{ dialogue }}</div>
+                            </li>
+
+                        {% else %}
+                            <li class="clearfix">
+                                <div class="message-data">
+                                    <span class="message-data-time">10:12 AM, Today</span>
+                                </div>
+                                <div class="message my-message">{{ dialogue }}</div>                                    
+                            </li>     
+                        </ul>
+                        {% endif %}
+                        {% endfor %}
+
+                    </div>
+                    {% comment %} <div class="chat-message clearfix">
+                        <div class="input-group mb-0">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-send"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Enter text here...">                                    
+                        </div>
+                    </div> {% endcomment %}
+                </div>
+                {% endif %}
+
+            </div>
+        
+        </div>
+    </div>
+
+{% endblock content %}
+

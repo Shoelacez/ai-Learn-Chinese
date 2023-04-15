@@ -1,0 +1,39 @@
+{% extends 'features/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %} translation | chineseGPT {% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="row my-2 g-5 justify-content-around align-items-center border">
+            <div class="col-lg-6 ">
+            <div class="text-center">
+                <h2>TRANSLATION</h2>
+                <p class="lead text-muted">
+                    As of current we only support translation from English to Chinese 
+                </p>
+            </div>
+            <label for="source-text">Enter text to translate:</label>
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="text" class="form-control" name="user_input">
+                <label for="target-language">Select target language:</label>
+                <select class="form-select mb-3" id="target-language" name="language">
+                    <option value="zh-CN">Chinese (Simplified)</option>
+                    <option value="zh-TW">Chinese (Traditional)</option>
+                </select>
+                <button class="btn btn-outline-success my-2">Submit</button>
+            </form>
+    
+            <label for="translated-text">Translated text:</label>
+            <div class="card mb-3">
+                <div class="card-body" id="translated-text">
+                {% if response %}
+                <div>
+                    {{ response | safe }}
+                </div>
+                {% endif %}
+                </div>
+            </div>
+            </div>
+    </div>
+{% endblock content %}

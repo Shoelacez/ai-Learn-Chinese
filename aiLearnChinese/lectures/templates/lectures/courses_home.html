@@ -1,0 +1,74 @@
+{% extends 'features/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Courses {% endblock title %}
+{% block content %}
+  <section id="services">
+    <div class="container">
+        <div class="row g-4 text-center">
+          <h3>OUR RECOMMENDED COURSES</h3>
+          <p class="lead ">Learn Several Topics made specially for you</p>
+            <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="150">
+                <div class="service theme-shadow p-lg-5 p-2 border border-primary rounded">
+                    <div class="iconbox">
+                        <i class="ri-book-open-fill"></i>
+                    </div>
+                    <h5 class="mt-4 mb-3">Reading Practice</h5>
+                    <p>Improve your Chinese reading skills with our curated reading exercises.</p>
+                    <a href="{% url  'reading' %}" class="btn btn-outline-primary">Practice</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="250">
+                <div class="service theme-shadow p-lg-5 p-4 border border-primary rounded">
+                    <div class="iconbox">
+                        <i class="ri-volume-down-fill"></i>
+                    </div>
+                    <h5 class="mt-4 mb-3">Listening Practice</h5>
+                    <p>Enhance your Chinese listening skills with our carefully selected listening exercises. </p>
+                    <a href="{% url  'listening' %}" class="btn btn-outline-primary">Start Listening</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="350">
+                <div class="service theme-shadow p-lg-5 p-4 border border-primary rounded">
+                    <div class="iconbox">
+                        <i class="ri-pen-nib-fill"></i>
+                    </div>
+                    <h5 class="mt-4 mb-3">Writing Practice</h5>
+                    <p>Course is designed to help you practice writing Chinese characters</p>
+                    <a href="{% url 'writing' %}" class="btn btn-outline-primary">Writing Lessons</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="550">
+                <div class="service theme-shadow p-lg-5 p-4 border border-primary rounded">
+                    <div class="iconbox">
+                        <i class="ri-user-smile-line"></i>
+                    </div>
+                    <h5 class="mt-4 mb-3">Fun Stories</h5>
+                    <p>Explore our collection of fun and entertaining stories to help you practice your Chinese reading.</p>
+                    <a href="#funStories" class="btn btn-outline-primary">View Stories</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="650">
+                <div class="service theme-shadow p-lg-5 p-4 border border-primary rounded">
+                    <div class="iconbox">
+                        <i class="ri-vidicon-line"></i>
+                    </div>
+                    <h5 class="mt-4 mb-3">Video Lessons</h5>
+                    <p>Our video lessons are designed to be engaging and interactive, learn Chinese at your own pace. </p>
+                    <a href="{% url 'video_lessons' %}" class="btn btn-outline-primary">Watch Lessons</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="450">
+                <div class="service theme-shadow p-lg-5 p-4 border border-primary rounded">
+                    <div class="iconbox">
+                        <i class="ri-medal-line"></i>
+                    </div>
+                    <h5 class="mt-4 mb-3">AI generated QUIZ</h5>
+                    <p>Challenge yourself with our AI-generated quiz questions to test your Chinese language skills.</p>
+                    <a href="{% url 'ai_quiz' %}" class="btn btn-outline-primary">Start Quiz</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+{% endblock content %}

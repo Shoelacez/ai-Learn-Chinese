@@ -1,0 +1,33 @@
+{% extends 'features/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Video Lessons {% endblock title %}
+{% block content %}
+{% for vid in vid_lessons %}
+{% if forloop.first or forloop.counter0|divisibleby:3 %}
+<div class="container">
+	<div class="row">
+{% endif %}
+		<div class="col-md-4">
+			{% if vid.video.url %}
+            <div class="title">
+                <h3>{{ vid.id }} - {{ vid.title }}</h3>
+            </div>
+			<div class="video-card my-3 ">
+				<div class="thumbnail">
+					<video controls style="height: 100%; width: 100%;">
+						<source src="{{ vid.video.url }}" type="video/mp4">
+					</video>
+				</div>
+	
+				<div class="description">{{ vid.description }}</div>
+				<div class="justify-contents-end"><small class="text-primary">Posted: {{ vid.posted | timesince}} ago</small></div>
+
+			</div>
+			{% endif %}
+		</div>
+{% if forloop.last or forloop.counter|divisibleby:3 %}
+	</div>
+</div>
+{% endif %}
+{% endfor %}
+{% endblock content %}

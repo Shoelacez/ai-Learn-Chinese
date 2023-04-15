@@ -1,0 +1,130 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock title %} | chineseGPT</title>
+    {% if is_dashboard %}
+        {% block dashboard_cdn_links %}
+        <!-- CDN links for the dashboard page only -->
+        {% endblock dashboard_cdn_links%}
+    {% endif %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css">
+    <link rel="stylesheet" href="{% static 'features/assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'features/assets/css/styled_cards.css' %}">
+    <link rel="stylesheet" href="{% static 'features/assets/css/clash-display.css' %}">
+    <link rel="stylesheet" href="{% static 'features/assets/css/convo_simulation.css' %}">
+    
+    <!-- For the Convo Simluation -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+</head>
+
+<body data-bs-spy="scroll" data-bs-target=".navbar">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}"><h2>AiLearnChinese</h2></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                  <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"> Home</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'chineseGPT' %}"> ChineseGPT</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'courses_home' %}"> Courses</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'user_reviews' %}"> Reviews</a></li>
+                  {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'ai_quiz' %}"> AI Quiz</a></li> {% endcomment %}
+                  <li class="nav-item"><a class="nav-link" href="{% url 'about' %}"> About</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}"> Dashboard</a></li>
+
+                </ul>
+            </div>
+              
+            <div class="navbar-collapse ms-auto" id="navbarNav">
+                {% if user.is_authenticated %}
+                <ul class="navbar-nav ms-auto">
+                  <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">{{user.username}}'s Profile</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+              </ul>
+                {% else %}
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="my-2">
+        {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% endif %}
+        {% block content %}
+    
+        {% endblock content %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'features/assets/js/main.js' %}"></script>
+    <script src="{% static 'features/assets/js/hanzi-writer.js' %}"></script>
+    
+    {% comment %} Hanzi Writer {% endcomment %}
+    <script>
+        var writer = HanziWriter.create('character-target-div', '国', {
+            width: 200,
+            height: 200,
+            padding: 5,
+            showOutline: true
+        });
+        document.getElementById('animate-button').addEventListener('click', function() {
+            writer.animateCharacter();
+        });
+    </script>
+
+    <!-- Add this script block at the bottom of your template, just before the closing body tag -->
+    <script>
+        // Get all the conversation items in the conversation history
+        const conversationItems = document.querySelectorAll('.chat-list li');
+
+        // Add a click event listener to each conversation item
+        conversationItems.forEach(conversationItem => {
+            conversationItem.addEventListener('click', function(event) {
+                // Prevent the default behavior of the link
+                event.preventDefault();
+
+                // Get the conversation scenario and dialogue
+                const scenario = conversationItem.querySelector('.name a').innerText;
+                const dialogue = conversationItem.querySelector('.status').innerText.split('ago')[0].trim();
+
+                // Update the chat window with the selected conversation
+                const chatScenario = document.querySelector('.chat-about h6');
+                const chatHistory = document.querySelector('.chat-history ul');
+                chatScenario.innerText = scenario;
+                chatHistory.innerHTML = `
+                    <li class="clearfix">
+                        <div class="message other-message float-right">${dialogue}</div>
+                    </li>
+                `;
+            });
+        });
+    </script>
+
+</body>
+
+</html>
